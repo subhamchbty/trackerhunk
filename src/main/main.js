@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { TrackerDb } = require('./db');
 const { registerIpc } = require('./ipc');
+const { initUpdater } = require('./updater');
 
 const APP_NAME = 'TrackerHunk';
 const DB_FILE = 'tracker.db';
@@ -17,6 +18,7 @@ app.setAppUserModelId('com.trackerhunk.app');
 app.disableHardwareAcceleration();
 
 let db = null;
+let mainWindow = null;
 
 /** Carry the database over from the folder the app used before it was renamed. */
 function migrateLegacyData() {
@@ -53,6 +55,7 @@ function createWindow() {
 
   win.removeMenu();
   win.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
+  mainWindow = win;
 }
 
 app.whenReady().then(() => {
@@ -60,6 +63,7 @@ app.whenReady().then(() => {
   db = new TrackerDb(path.join(app.getPath('userData'), DB_FILE));
   registerIpc(db);
   createWindow();
+  initUpdater(() => mainWindow, db);
 });
 
 app.on('window-all-closed', () => {

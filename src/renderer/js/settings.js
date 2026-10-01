@@ -13,6 +13,10 @@ const backBtn = document.getElementById('settings-back');
 const listEl = document.getElementById('settings-projects');
 const addForm = document.getElementById('settings-add');
 const addInput = document.getElementById('settings-add-name');
+const autoUpdateToggle = document.getElementById('settings-auto-update');
+const checkUpdateBtn = document.getElementById('settings-check-update');
+const updateStatus = document.getElementById('settings-update-status');
+const versionEl = document.getElementById('settings-version');
 
 export function isSettingsOpen() {
   return !panel.classList.contains('hidden');
@@ -141,10 +145,40 @@ async function addProject() {
   }
 }
 
+// ---- updates ----
+
+async function loadUpdatePrefs() {
+  try {
+    autoUpdateToggle.checked = (await api.getSetting('autoUpdate')) !== '0';
+    versionEl.textContent = `TrackerHunk ${await api.getVersion()}`;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function checkNow() {
+  checkUpdateBtn.disabled = true;
+  updateStatus.textContent = 'Checking…';
+  try {
+    const r = await api.checkForUpdate();
+    if (r.unsupported) updateStatus.textContent = 'Updates apply to the installed app only.';
+    else if (r.available) updateStatus.textContent = `${r.latest} is downloading.`;
+    else updateStatus.textContent = `You have the latest version (${r.current}).`;
+  } catch (err) {
+    updateStatus.textContent = 'Could not reach GitHub.';
+    console.error(err);
+  } finally {
+    checkUpdateBtn.disabled = false;
+  }
+}
+
 // ---- init ----
 
 export function initSettings() {
   addForm.after(errorEl);
+  loadUpdatePrefs();
+  autoUpdateToggle.addEventListener('change', () => api.setSetting('autoUpdate', autoUpdateToggle.checked ? '1' : '0'));
+  checkUpdateBtn.addEventListener('click', checkNow);
 
   openBtn.addEventListener('click', () => (isSettingsOpen() ? closeSettings() : openSettings()));
   backBtn.addEventListener('click', closeSettings);

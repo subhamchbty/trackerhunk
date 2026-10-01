@@ -24,5 +24,13 @@ contextBridge.exposeInMainWorld('tracker', {
   getSetting: (key) => ipcRenderer.invoke('settings:get', key),
   setSetting: (key, value) => ipcRenderer.invoke('settings:set', key, value),
 
-  openUrl: (url) => ipcRenderer.invoke('shell:openUrl', url)
+  openUrl: (url) => ipcRenderer.invoke('shell:openUrl', url),
+
+  getVersion: () => ipcRenderer.invoke('app:version'),
+  onUpdateReady: (callback) => {
+    ipcRenderer.on('update:ready', (_event, info) => callback(info));
+  },
+  getUpdateState: () => ipcRenderer.invoke('update:state'),
+  checkForUpdate: () => ipcRenderer.invoke('update:check'),
+  installUpdate: () => ipcRenderer.invoke('update:install')
 });

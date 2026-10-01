@@ -71,9 +71,35 @@ input, textarea { user-select: text; }
   -webkit-app-region: no-drag;
 }
 
+/* ---- update bar: sits between the title bar and the content ---- */
+
+.update-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 20px 12px;
+  padding: 8px 8px 8px 12px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.update-bar > span { flex: 1; }
+.button.small { height: 28px; padding: 0 12px; font-size: 12px; }
+.update-bar .icon-button { font-size: 18px; }
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.titlebar { flex-shrink: 0; }
+
 .app,
 .settings {
-  height: calc(100% - var(--titlebar));
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   padding: 0 20px 20px;

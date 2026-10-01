@@ -7,7 +7,7 @@
  */
 
 const MAX_TEXT = 2000;
-const SETTING_KEYS = new Set(['running']);
+const SETTING_KEYS = new Set(['running', 'autoUpdate']);
 
 class ValidationError extends Error {}
 

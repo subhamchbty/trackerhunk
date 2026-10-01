@@ -8,6 +8,7 @@ import { initTaskForm, isFormOpen, closeForm, openForm } from './task-form.js';
 import { initConfirm, isConfirmOpen } from './confirm.js';
 import { initSettings, isSettingsOpen, closeSettings } from './settings.js';
 import { initExport, isExportOpen, closeExport } from './export.js';
+import { initUpdate } from './update.js';
 
 function initShortcuts() {
   document.addEventListener('keydown', (e) => {
@@ -42,6 +43,7 @@ async function main() {
   initTaskForm();
   initSettings();
   initExport();
+  initUpdate();
   await initLog();
   initShortcuts();
 }

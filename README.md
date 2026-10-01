@@ -48,6 +48,19 @@ To sign builds in CI, add two repository secrets: `WINDOWS_CERT_BASE64`
 (the PFX file, base64 encoded) and `WINDOWS_CERT_PASSWORD`. Without them
 the build is unsigned.
 
+## In-app updates
+
+The installed app checks GitHub Releases for a newer version ten seconds
+after launch and every four hours, downloads it in the background, and then
+shows a bar with "Restart now". Choosing Later keeps the update for the next
+launch. Settings has a switch to turn the automatic checks off and a "Check
+now" button that works either way. The portable exe does not update itself.
+
+Shipping an update is the release flow above: bump `version` in
+`package.json`, commit, tag `v<version>`, push the tag. Installed copies
+pick it up on their next check. Updates are only offered when the release
+version is higher than the installed one.
+
 ## Signing the build
 
 Windows treats an unsigned installer two ways. Plain SmartScreen shows

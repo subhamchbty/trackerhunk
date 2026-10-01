@@ -3,9 +3,12 @@
 const { ipcMain, shell, BrowserWindow } = require('electron');
 const v = require('./validate');
 const { exportCsv } = require('./csv');
+const { version } = require('../../package.json');
 
 /** Wire every renderer request to the database, validating inputs first. */
 function registerIpc(db) {
+  ipcMain.handle('app:version', () => version);
+
   ipcMain.handle('projects:list', () => db.listProjects());
   ipcMain.handle('projects:add', (_e, name) => db.addProject(v.projectName(name)));
   ipcMain.handle('projects:rename', (_e, id, name) => db.renameProject(v.id(id), v.projectName(name)));

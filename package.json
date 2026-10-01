@@ -1,6 +1,6 @@
 {
   "name": "trackerhunk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TrackerHunk: a minimal, modern time tracker for Windows",
   "main": "src/main/main.js",
   "scripts": {
@@ -11,7 +11,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "better-sqlite3": "^12.0.0"
+    "better-sqlite3": "^12.0.0",
+    "electron-updater": "^6.8.9"
   },
   "devDependencies": {
     "electron": "^33.0.0",
@@ -65,6 +66,13 @@
     },
     "portable": {
       "artifactName": "${productName}-${version}-portable.${ext}"
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "subhamchbty",
+        "repo": "trackerhunk"
+      }
+    ]
   }
 }

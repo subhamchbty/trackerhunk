@@ -37,6 +37,12 @@
     </div>
   </header>
 
+  <div id="update-bar" class="update-bar hidden" role="status">
+    <span id="update-text"></span>
+    <button id="update-restart" class="button primary small" type="button">Restart now</button>
+    <button id="update-later" class="icon-button" type="button" title="Later">&times;</button>
+  </div>
+
   <main id="main" class="app">
     <section class="timer-card">
       <div id="current" class="current idle"></div>
@@ -90,6 +96,17 @@
 
     <h3 class="settings-label">Data</h3>
     <button id="settings-export" class="button ghost" type="button">Export sessions to CSV</button>
+
+    <h3 class="settings-label">Updates</h3>
+    <label class="settings-toggle">
+      <input id="settings-auto-update" type="checkbox" checked />
+      <span>Check for updates automatically</span>
+    </label>
+    <div class="settings-row">
+      <button id="settings-check-update" class="button ghost" type="button">Check now</button>
+      <span id="settings-update-status" class="settings-note"></span>
+    </div>
+    <p id="settings-version" class="settings-note"></p>
   </section>
 
   <!-- New task / edit task / running timer -->
