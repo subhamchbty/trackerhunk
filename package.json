@@ -1,0 +1,70 @@
+{
+  "name": "trackerhunk",
+  "version": "0.1.0",
+  "description": "TrackerHunk: a minimal, modern time tracker for Windows",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "node scripts/electron.js .",
+    "icons": "node scripts/electron.js scripts/build-icons.js",
+    "postinstall": "node scripts/fetch-sqlite.js",
+    "dist": "electron-builder --win"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^12.0.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^26.15.3",
+    "prebuild-install": "^7.1.2"
+  },
+  "productName": "TrackerHunk",
+  "author": "Subham",
+  "build": {
+    "appId": "com.trackerhunk.app",
+    "productName": "TrackerHunk",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/logo.svg",
+      "assets/icons/icon.ico",
+      "assets/icons/icon.png",
+      "package.json"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "npmRebuild": false,
+    "buildDependenciesFromSource": false,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icons/icon.ico",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "TrackerHunk"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+name: Build
+
+# Builds the Windows installer and portable exe on every push to main (and
+# for pull requests against it), and attaches them to a GitHub Release when
+# a version tag such as v0.1.0 is pushed.
+#
+# Signing is optional: add two repository secrets and the build is signed.
+#   WINDOWS_CERT_BASE64    the .pfx file, base64 encoded
+#   WINDOWS_CERT_PASSWORD  its password
+# Encode a PFX with:  [Convert]::ToBase64String([IO.File]::ReadAllBytes("cert.pfx"))
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check the app starts and the database works
+        shell: bash
+        run: node scripts/ci-smoke.js
+
+      - name: Enable signing when a certificate secret is present
+        if: ${{ env.CERT != '' }}
+        shell: bash
+        env:
+          CERT: ${{ secrets.WINDOWS_CERT_BASE64 }}
+          CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
+        run: |
+          echo "CSC_LINK=$CERT" >> "$GITHUB_ENV"
+          echo "CSC_KEY_PASSWORD=$CERT_PASSWORD" >> "$GITHUB_ENV"
+
+      - name: Build installer and portable exe
+        run: npm run dist
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrackerHunk-windows
+          path: |
+            dist/*.exe
+            dist/*.blockmap
+            dist/latest.yml
+          if-no-files-found: error
+
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.exe
+            dist/*.blockmap
+            dist/latest.yml
+          generate_release_notes: true

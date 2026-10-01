@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- TrackerHunk mark: a stopwatch on a rounded tile -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6f9cf5" />
+      <stop offset="1" stop-color="#3b67d6" />
+    </linearGradient>
+  </defs>
+  <rect x="3" y="3" width="58" height="58" rx="16" fill="url(#tile)" />
+  <!-- crown and shoulders -->
+  <rect x="28" y="9" width="8" height="7" rx="2" fill="#ffffff" />
+  <path d="M45.5 17.5l4-4" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+  <!-- dial -->
+  <circle cx="32" cy="36" r="17" fill="none" stroke="#ffffff" stroke-width="5" />
+  <!-- hands: a bold check-like sweep -->
+  <path d="M32 36V25.5" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+  <path d="M32 36l7.5 5" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+  <circle cx="32" cy="36" r="3.2" fill="#ffffff" />
+</svg>

@@ -1,0 +1,67 @@
+/* The timer card: current task, day total clock, start/stop. */
+
+.timer-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.current {
+  max-width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+.clock-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.clock {
+  font-family: var(--mono);
+  font-size: 48px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s;
+}
+
+.clock.running { color: var(--accent); }
+
+.session {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--muted);
+  min-height: 16px;
+}
+
+.toggle {
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.08s;
+}
+
+.toggle:hover { background: var(--accent-hover); }
+.toggle:active { transform: scale(0.98); }
+.toggle.running { background: var(--danger); }
+.toggle.running:hover { background: var(--danger-hover); }

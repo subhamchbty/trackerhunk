@@ -1,0 +1,164 @@
+/* Overlay dialogs: the task form and the confirmation prompt. */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 380px;
+  max-height: 100%;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: pop-in 0.16s ease-out;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.modal-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
+.modal-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.modal-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* ---- task form ---- */
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.form-label > span,
+.form-sessions-head > span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-row.horizontal {
+  display: flex;
+  gap: 10px;
+}
+
+.form-sessions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-sessions-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.text-button:hover { text-decoration: underline; }
+
+.session-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.session-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.session-time {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 6px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.session-sep { color: var(--muted); }
+
+.session-dur {
+  min-width: 62px;
+  text-align: right;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.session-remove { opacity: 1; }
+
+.form-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 16px;
+  font-size: 12px;
+}
+
+.form-duration {
+  font-family: var(--mono);
+  color: var(--muted);
+}
+
+.form-error { color: var(--danger); }
+
+/* ---- confirm ---- */
+
+.confirm-card { max-width: 320px; }
+
+.confirm-message {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
