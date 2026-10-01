@@ -26,6 +26,28 @@ installing. Native modules are not recompiled; the prebuilt SQLite binary
 fetched at install time is packaged as is. The build is unsigned, so
 SmartScreen will warn on first run until you add a code-signing certificate.
 
+## Continuous build and releases
+
+The GitHub Actions workflow in `.github/workflows/build.yml` runs on every
+push to `main` and on pull requests against it. It installs dependencies,
+runs the smoke test in `scripts/ci-smoke.js` (starts Electron headless,
+writes to a throwaway database, loads the page and checks for errors), then
+builds the installer and portable exe and uploads them as the
+`TrackerHunk-windows` artifact on the run.
+
+To publish a release, tag a commit and push the tag:
+
+    git tag v0.1.0
+    git push origin v0.1.0
+
+The same workflow then creates a GitHub Release for that tag with the
+installer, the portable exe and the update metadata attached, and
+generates release notes from the commits.
+
+To sign builds in CI, add two repository secrets: `WINDOWS_CERT_BASE64`
+(the PFX file, base64 encoded) and `WINDOWS_CERT_PASSWORD`. Without them
+the build is unsigned.
+
 ## Signing the build
 
 Windows treats an unsigned installer two ways. Plain SmartScreen shows
