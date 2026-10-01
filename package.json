@@ -7,7 +7,7 @@
     "start": "node scripts/electron.js .",
     "icons": "node scripts/electron.js scripts/build-icons.js",
     "postinstall": "node scripts/fetch-sqlite.js",
-    "dist": "electron-builder --win"
+    "dist": "electron-builder --win --publish never"
   },
   "license": "MIT",
   "dependencies": {
